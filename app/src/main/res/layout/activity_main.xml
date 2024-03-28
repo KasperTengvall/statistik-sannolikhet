@@ -46,19 +46,20 @@
         android:id="@+id/btnCalc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="20dp"
         android:onClick="buttonCalc"
-        android:text="Button"
+        android:text="Calculate"
         app:layout_constraintBottom_toBottomOf="@+id/outValue"
         app:layout_constraintStart_toEndOf="@+id/outValue"
-        app:layout_constraintTop_toTopOf="@+id/outValue" />
+        app:layout_constraintTop_toTopOf="@+id/outValue"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/outValue"
-        android:layout_width="193dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="168dp"
-        android:text="TextView"
+        android:layout_width="221dp"
+        android:layout_height="78dp"
+        android:layout_marginTop="152dp"
+        android:text="Answers come here"
         app:layout_constraintStart_toStartOf="@+id/inputText"
         app:layout_constraintTop_toBottomOf="@+id/inputText" />
 
