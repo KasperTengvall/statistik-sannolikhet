@@ -1,55 +1,53 @@
 package fi.arcada.codechallenge;
 
-import static fi.arcada.codechallenge.Statistics.calcMedian;
-import static fi.arcada.codechallenge.Statistics.calcStdev;
-import static fi.arcada.codechallenge.Statistics.calculateAverage;
-
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView outputText;
-    TextView valueText;
-    EditText inputText;
-
-    ArrayList<Double> values = new ArrayList<>();
+    double[] temps = {-4.7, -4.8, -1.8, 0.7, 0.1, -6, -7.8, -7, -3.8, -10.6, -10.3, -0.3, 4.8, 2.6, 0.1, 1.2, -1.5, -2.7, 1.8, 0.2, -2, -5.5, -1.3, 2.1, -0.6, -0.9, 1, -0.5, -1.4, -1.6, -5.3, -7.7, -8.2, -9.5, -3.9, -0.4, 1, 0.8, -0.4, 0.6, 1, -1.5, -0.5, 1.4, 1.5, 1.8, 2, 1.1, -0.1, 0.1, -0.7, -0.4, -3, -6.8, 2, 1.5, -1.3, -0.2, 1.6, 1.9, 1.3, 0.6, -2, -2.4, 0.8, -0.3, -2.5, -2.6, -0.7, 1.8, 1.3, 0.9, 3, 0.7, 0.8, 1.6, 2.5, 2, 6.2};
+    LineChart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        valueText = findViewById(R.id.outValue);
-        outputText = findViewById(R.id.outText);
-        inputText = findViewById(R.id.inputText);
 
-        outputText.setText("Min app funkar!");
+        chart = findViewById(R.id.chart);
 
-        double[] testdata = {658457, 297132, 244223, 239206, 209551, 195137, 144473, 121543, 120027, 83482, 80454, 77261, 72634, 67971, 67615, 64736, 64180, 52122, 51400, 51241, 51149, 47909, 46880, 45988, 45226, 38959, 37232, 36493, 35497, 34884, 33533, 32622, 32547, 28521, 27484, 25655, 24810, 24260, 23998, 21333, 20958, 20695, 20197, 19982, 19973, 19767, 19702, 19579, 19097, 18344, 18318, 17253, 16573, 16467, 15808, 15628, 15463, 15357, 15312, 15165, 15086, 14643, 14203, 12890, 12669, 12662, 12412, 11742, 11197, 11041, 10543, 10396, 10396, 9877, 9870, 9563, 9562, 9443, 9423, 9311, 9117, 8978, 8717, 8563, 8456, 7979, 7928, 7759, 7702, 7497, 7105, 7102, 6951, 6891, 6877, 6802, 6785, 6613, 6506, 6465, 6380, 6286, 6070, 5484, 5390, 4964, 1289};
+        simpleChart(temps, "Temperatur");
 
-        for (double value : testdata) {
-            values.add(value);
+        int windowSize = 10;
+        double[] smaValues = Statistics.sma(temps, windowSize);
+        System.out.println("Glidande medelvärde med fönster storlek av " + windowSize + ": " + Arrays.toString(smaValues));
+    }
+
+    public void simpleChart(double[] values, String label) {
+        List<Entry> entries = new ArrayList<>();
+
+        for (int i = 0; i < values.length; i++) {
+            entries.add(new Entry(i, (float) values[i]));
         }
-    }
 
+        LineDataSet lineDataSet = new LineDataSet(entries, label);
+        lineDataSet.setDrawValues(false);
+        lineDataSet.setDrawCircles(false);
+        lineDataSet.setColor(Color.RED);
 
+        LineData lineData = new LineData(lineDataSet);
 
-    public void buttonHandler(View view) {
-        outputText.setText(inputText.getText().toString());
-    }
-
-    public void buttonCalc(View view) {
-        double median = calcMedian(values);
-        double average = calculateAverage(values);
-        double stdev = calcStdev(values);
-        valueText.setText("Average: " + average + "\nMedian: " + median + "\nStandardavvikelse: " + stdev);
+        chart.setData(lineData);
+        chart.invalidate();
     }
 }

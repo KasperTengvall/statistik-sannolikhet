@@ -7,60 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/inputText"
-        android:layout_width="229dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="120dp"
-        android:ems="10"
-        android:hint="Skriv"
-        android:inputType="text"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnOk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:onClick="buttonHandler"
-        android:text="OK"
-        app:layout_constraintBottom_toBottomOf="@+id/inputText"
-        app:layout_constraintStart_toEndOf="@+id/inputText"
-        app:layout_constraintTop_toTopOf="@+id/inputText"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/outText"
-        android:layout_width="225dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="44dp"
-        android:text="Code challenge"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/inputText"
-        app:layout_constraintTop_toBottomOf="@+id/inputText" />
-
-    <Button
-        android:id="@+id/btnCalc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:onClick="buttonCalc"
-        android:text="Calculate"
-        app:layout_constraintBottom_toBottomOf="@+id/outValue"
-        app:layout_constraintStart_toEndOf="@+id/outValue"
-        app:layout_constraintTop_toTopOf="@+id/outValue"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/outValue"
-        android:layout_width="221dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="152dp"
-        android:text="Answers come here"
-        app:layout_constraintStart_toStartOf="@+id/inputText"
-        app:layout_constraintTop_toBottomOf="@+id/inputText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

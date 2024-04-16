@@ -37,4 +37,20 @@ public class Statistics {
         double average = sum / values.size();
         return average;
     }
+
+
+    public static double[] sma(double[] values, int windowSize) {
+
+        double[] smaValues = new double[values.length - windowSize + 1];
+
+        for (int i = 0; i < smaValues.length; i++) {
+            double sum = 0;
+            for (int j = i; j < i + windowSize; j++) {
+                sum += values[j];
+            }
+            smaValues[i] = sum / windowSize;
+        }
+
+        return smaValues;
+    }
 }
