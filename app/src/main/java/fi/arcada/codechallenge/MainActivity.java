@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         simpleChart(temps, "Temperatur");
 
-        int windowSize = 10;
+        int windowSize = 3;
         double[] smaValues = Statistics.sma(temps, windowSize);
         System.out.println("Glidande medelvärde med fönster storlek av " + windowSize + ": " + Arrays.toString(smaValues));
     }
