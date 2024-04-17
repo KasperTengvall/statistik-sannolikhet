@@ -2,7 +2,6 @@ package fi.arcada.codechallenge;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -26,26 +25,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        chart = findViewById(R.id.chart);
+        chart = (LineChart) findViewById(R.id.chart);
 
         //simpleChart(temps, "Temperatur");
 
-        int windowSize = 3;
-        double[] smaValues = Statistics.sma(temps, windowSize);
-        System.out.println("Glidande medelvärde med fönster storlek av " + windowSize + ": " + Arrays.toString(smaValues));
         ArrayList<DataLine> dataLines = new ArrayList<>();
-        dataLines.add(new DataLine(temps, "Temperatur", Color.GREEN, 0));
-
+        dataLines.add(new DataLine(temps, "Temperatur", Color.BLUE, 0));
+        dataLines.add(new DataLine(Statistics.sma(temps, 10), "SMA-10", Color.RED, 9));
+        dataLines.add(new DataLine(Statistics.sma(temps, 20), "SMA-20", Color.GREEN, 19));
         improvedChart(dataLines);
 
     }
 
     public void improvedChart(ArrayList<DataLine> dataLines) {
 
-        List<ILineDataSet>dataSeries = new ArrayList<>();
+        List<ILineDataSet> dataSeries = new ArrayList<>();
 
         for (DataLine dataLine: dataLines) {
-            LineDataSet lineDataSet = new LineDataSet(dataLine.getEntries(), dataLine.getLabel());
+            LineDataSet lineDataSet = new LineDataSet(
+                    dataLine.getEntries(), dataLine.getLabel()
+            );
+            lineDataSet.setDrawValues(false);
+            lineDataSet.setDrawCircles(false);
+            lineDataSet.setColor(dataLine.getColor());
 
             dataSeries.add(lineDataSet);
         }
@@ -54,15 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
         chart.setData(lineData);
         chart.invalidate();
+
     }
 
     public void simpleChart(double[] values, String label) {
+
         List<Entry> entries = new ArrayList<>();
 
         for (int i = 0; i < values.length; i++) {
             entries.add(new Entry(i, (float) values[i]));
         }
-
         LineDataSet lineDataSet = new LineDataSet(entries, label);
         lineDataSet.setDrawValues(false);
         lineDataSet.setDrawCircles(false);
@@ -72,5 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
         chart.setData(lineData);
         chart.invalidate();
+
     }
+
+
+
 }

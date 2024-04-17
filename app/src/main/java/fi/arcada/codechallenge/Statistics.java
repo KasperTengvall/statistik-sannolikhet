@@ -1,56 +1,38 @@
 package fi.arcada.codechallenge;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class Statistics {
 
-    public static double calcStdev(ArrayList<Double> values) {
+    public static double calcMean(double[] values) {
         double sum = 0;
-        double average = calculateAverage(values);
-
-        for (double num : values) {
-            sum += Math.pow(num - average, 2);
+        for (int i = 0; i < values.length; i++) {
+            sum += values[i];
         }
 
-        double variance = sum / values.size();
-        return Math.sqrt(variance);
+        return sum / values.length;
     }
 
-    public static double calcMedian(ArrayList<Double> values) {
-        Collections.sort(values);
-        int size = values.size();
-        if (size % 2 == 0) {
-            int midIndex1 = size / 2 - 1;
-            int midIndex2 = size / 2;
-            return (values.get(midIndex1) + values.get(midIndex2)) / 2.0;
-        } else {
-            return values.get(size / 2);
+    public static double[] sma3(double[] values) {
+        double[] sma = new double[values.length];
+
+        for (int i = 2; i < values.length; i++ ) {
+            sma[i] = (values[i] + values[i-1] + values[i-2])/3;
         }
+        return sma;
     }
 
-    public static double calculateAverage(ArrayList<Double> values) {
-        double sum = 0;
-        for (double num : values) {
-            sum += num;
-        }
-        double average = sum / values.size();
-        return average;
-    }
+    public static double[] sma(double[] values, int window) {
+        double[] sma = new double[values.length];
 
-
-    public static double[] sma(double[] values, int windowSize) {
-
-        double[] smaValues = new double[values.length - windowSize + 1];
-
-        for (int i = 0; i < smaValues.length; i++) {
+        for (int i = window-1; i < values.length; i++ ) {
             double sum = 0;
-            for (int j = i; j < i + windowSize; j++) {
-                sum += values[j];
+
+            // Inre loop loopar igenom fönstret och adderar värdena
+            for (int j = 0; j < window; j++) {
+                sum += values[i-j]; // i-0, i-1, i-2 osv...
             }
-            smaValues[i] = sum / windowSize;
+            sma[i] = sum/window;
         }
 
-        return smaValues;
+        return sma;
     }
 }
